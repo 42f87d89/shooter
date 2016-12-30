@@ -21,13 +21,17 @@ function init() {
 
 var listeners = [
     {evt: "mousemove", fun: m},
+    {evt: "mousedown", fun: mouseDown},
+    {evt: "mouseup", fun: mouseUp},
     {evt: "keydown", fun: keydowns},
     {evt: "keyup", fun: keyups}
 ];
 
 function addListeners(cvs) {
     cvs.onclick = function() {
-        cvs.requestPointerLock();
+        if(!paused) {
+            cvs.requestPointerLock();
+        }
     }
     window.addEventListener("pointerlockchange", (e) => {
         if (document.pointerLockElement === cvs) {
@@ -62,8 +66,25 @@ function keydowns(e) {
     keyStates[e.key] = true;
 }
 
+function mouseDown(e) {
+    if(e.button == 0) {
+        mouseClicks.left = true;
+    } else if(e.button == 2) {
+        mouseClicks.right = true;
+    }
+}
+
+function mouseUp(e) {
+    if(e.button == 0) {
+        mouseClicks.left = false;
+    } else if(e.button == 2) {
+        mouseClicks.right = false;
+    }
+}
+
 function main() {
-    playerMove();
+    playerInput();
+    runPhysicsSystem();
     runRenderSystem();
     var mouse = ecs.newEntity();
     mouse.position = mousePos;
@@ -73,4 +94,5 @@ function main() {
 var paused = false;
 
 var keyStates = {};
-var mousePos = {x: 0, y: 0};
+var mousePos = {x: canvasSize.width/2, y: canvasSize.height/2};
+var mouseClicks = {};
