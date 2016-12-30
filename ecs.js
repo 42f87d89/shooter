@@ -5,5 +5,9 @@ var ecs = {
         ecs.entities.push(e);
         return e;
     },
+    deleteEntity: function(e) {
+        e = {};
+        ecs.entity_count--;
+    },
     entities: [],
 };

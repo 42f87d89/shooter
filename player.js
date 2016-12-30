@@ -1,12 +1,16 @@
 var playerPos = {x: canvasSize.width/2, y: canvasSize.height/2};
 var playerRect = {width: 10, height: 10, color: "#000"};
-var playerPhysics = {velocity: {x: 0, y: 0}, acceleration: {x: 0, y: 0}, topSpeed: 5};
+var playerPhysics = {velocity: {x: 0, y: 0}, acceleration: {x: 0, y: 0}, topSpeed: 5, friction: 0.5};
 
 var player = ecs.newEntity();
 
 player.position = playerPos;
 player.render = playerRect;
 player.physics = playerPhysics;
+
+var mouse = ecs.newEntity();
+mouse.position = mousePos;
+mouse.render = {width: 4, height: 4, color: "#e00"} 
 
 function playerInput() {
     if(keyStates['w'] && !keyStates['s']) {
@@ -37,8 +41,11 @@ function fireBullet() {
     var bullet = ecs.newEntity();
     bullet.position = {x: player.position.x, y: player.position.y};
     bullet.physics = {
-        velocity: {x: 5*mousePos.x/dist, y: 5*mousePos.y/dist},
+        velocity: {x: 5*(mousePos.x-player.position.x)/dist, y: 5*(mousePos.y-player.position.y)/dist},
         acceleration: {x: 0, y: 0},
+        topSpeed: 5,
+        friction: 0,
     }
     bullet.render = {width: 5, height: 5, color: "#00e"};
+    bullet.timer = {lifetime: 0, lifespan: 2};
 }

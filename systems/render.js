@@ -6,7 +6,7 @@ function clearCanvas() {
 function runRenderSystem() {
     clearCanvas();
     for (e of ecs.entities) {
-        if(!(e.position && e.render)) continue;
+        if(e.position === undefined || e.render === undefined) continue;
         ctx.fillStyle = e.render.color;
         ctx.fillRect(e.position.x, e.position.y, e.render.width, e.render.height);
     }

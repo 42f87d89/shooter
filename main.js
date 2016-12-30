@@ -92,6 +92,3 @@ var paused = false;
 var keyStates = {};
 var mousePos = {x: canvasSize.width/2, y: canvasSize.height/2};
 var mouseClicks = {};
-var mouse = ecs.newEntity();
-mouse.position = mousePos;
-mouse.render = {width: 4, height: 4, color: "#e00"}
