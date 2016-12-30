@@ -63,23 +63,14 @@ function keydowns(e) {
 }
 
 function main() {
-    clearCanvas()
     playerMove();
-    playerRender();
-    mouseRender();
-}
-
-function clearCanvas() {
-    ctx.fillStyle = "#eee";
-    ctx.fillRect(0, 0, canvasSize.width, canvasSize.height);
+    runRenderSystem();
+    var mouse = ecs.newEntity();
+    mouse.position = mousePos;
+    mouse.render = {width: 4, height: 4, color: "#e00"}
 }
 
 var paused = false;
 
 var keyStates = {};
 var mousePos = {x: 0, y: 0};
-
-function mouseRender() {
-    ctx.fillStyle = "#e00";
-    ctx.fillRect(mousePos.x, mousePos.y, 4, 4);
-}
