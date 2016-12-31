@@ -17,6 +17,8 @@ function init() {
     ctx.fillStyle = "#eee";
     ctx.fillRect(0, 0, canvasSize.width, canvasSize.height);
     document.getElementById("main").appendChild(cvs);
+
+    systems = [timerSystem, renderSystem, physicsSystem, loggerSystem];
 }
 
 var listeners = [
@@ -48,11 +50,19 @@ function addListeners(cvs) {
 
 function m(e) {
     mousePos.x += e.movementX;
-    if(mousePos.x > canvasSize.width) mousePos.x = canvasSize.width;
-    else if(mousePos.x < 0) mousePos.x = 0;
+    if(mousePos.x+4 > canvasSize.width) {
+        mousePos.x = canvasSize.width-4;
+    }
+    else if(mousePos.x < 0) {
+        mousePos.x = 0;
+    }
     mousePos.y += e.movementY;
-    if(mousePos.y > canvasSize.height) mousePos.y = canvasSize.height;
-    else if(mousePos.y < 0) mousePos.y = 0;
+    if(mousePos.y+4 > canvasSize.height) {
+        mousePos.y = canvasSize.height-4;
+    }
+    else if(mousePos.y < 0) {
+        mousePos.y = 0;
+    }
 };
 
 function keyups(e) {
@@ -80,11 +90,13 @@ function mouseUp(e) {
     }
 }
 
+var systems;
+
 function main() {
     playerInput();
-    runPhysicsSystem();
-    runRenderSystem();
-    runTimerSystem();
+    for(s of systems) {
+        ecs.runSystem(s);
+    }
 }
 
 var paused = false;

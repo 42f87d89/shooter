@@ -1,13 +1,11 @@
-function runPhysicsSystem() {
-    for (e of ecs.entities) {
-        if(e.position === undefined || e.physics === undefined) continue;
+function physicsSystem(e) {
+    if(e.position === undefined || e.physics === undefined) return;
 
-        e.physics.velocity.x = asd(e.physics.velocity.x, e.physics.acceleration.x, e.physics.topSpeed, e.physics.friction);
-        e.physics.velocity.y = asd(e.physics.velocity.y, e.physics.acceleration.y, e.physics.topSpeed, e.physics.friction);
+    e.physics.velocity.x = asd(e.physics.velocity.x, e.physics.acceleration.x, e.physics.topSpeed, e.physics.friction);
+    e.physics.velocity.y = asd(e.physics.velocity.y, e.physics.acceleration.y, e.physics.topSpeed, e.physics.friction);
 
-        e.position.x += e.physics.velocity.x;
-        e.position.y += e.physics.velocity.y;
-    }
+    e.position.x += e.physics.velocity.x;
+    e.position.y += e.physics.velocity.y;
 }
 
 function asd(vel, acc, top, fric) {

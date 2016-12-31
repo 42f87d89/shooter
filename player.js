@@ -10,7 +10,7 @@ player.physics = playerPhysics;
 
 var mouse = ecs.newEntity();
 mouse.position = mousePos;
-mouse.render = {width: 4, height: 4, color: "#e00"} 
+mouse.render = {width: 4, height: 4, color: "#e00"};
 
 function playerInput() {
     if(keyStates['w'] && !keyStates['s']) {

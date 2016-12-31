@@ -6,8 +6,18 @@ var ecs = {
         return e;
     },
     deleteEntity: function(e) {
-        e = {};
+        if(e.recycle) {
+            console.log("what");
+            return;
+        }
+        e.recyle = true;
         ecs.entity_count--;
+    },
+    runSystem: function(sys) {
+        for (e of ecs.entities) {
+            if(e.recycle === true) continue;
+            sys(e);
+        }
     },
     entities: [],
 };
